@@ -22,6 +22,3 @@ jobs:
         with:
           filename: 'palmettopointedance.zip'
           exclusions: '*.git* /*node_modules/* .editorconfig'
-      - name: List files
-        run: ls -A
-
