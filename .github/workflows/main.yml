@@ -4,14 +4,24 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    name: build
+  update:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: borales/actions-yarn@v2.3.0
+      
+      - name: yarn install
+        uses: borales/actions-yarn@v2.3.0
         with:
           cmd: install
-      - uses: borales/actions-yarn@v2.3.0
+      - name: yarn build
+        uses: borales/actions-yarn@v2.3.0
         with:
           cmd: build:production
+      - name: Zip Release
+        uses: TheDoctor0/zip-release@0.4.2
+        with:
+          filename: 'palmettopointedance.zip'
+          exclusions: '*.git* /*node_modules/* .editorconfig'
+      - name: List files
+        run: ls -A
+
