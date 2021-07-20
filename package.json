@@ -18,9 +18,15 @@
     "lint:css": "stylelint \"resources/**/*.{css,scss,vue}\"",
     "translate": "npm run translate:pot && npm run translate:js",
     "translate:pot": "wp i18n make-pot . ./resources/lang/sage.pot --ignore-domain --include=\"app,resources\"",
-    "translate:js": "wp i18n make-json ./resources/lang --pretty-print"
+    "translate:js": "wp i18n make-json ./resources/lang --pretty-print",
+    "release": "standard-version",
+    "buildcli": "helpers/build.sh"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/exec": "^5.0.0",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/github": "^7.2.3",
     "@tailwindcss/typography": "^0.4.1",
     "@tinypixelco/laravel-mix-wp-blocks": "^1.1.0",
     "@wordpress/babel-preset-default": "^6.1.0",
@@ -35,11 +41,67 @@
     "postcss": "^8.3.0",
     "sass": "^1.34.0",
     "sass-loader": "11.1.1",
+    "semantic-release": "^17.4.4",
+    "standard-version": "^9.3.1",
     "stylelint": "^13.13.1",
     "stylelint-config-standard": "^22.0.0",
     "tailwindcss": "^2.1.2"
   },
   "peerDependencies": {
     "jquery": "^3.5.1"
+  },
+  "standard-version": {
+    "skip": {
+      "tag": true,
+      "commit": true,
+      "changelog": true
+    },
+    "bumpFiles": [
+      {
+        "filename": "package.json",
+        "type": "json"
+      },
+      {
+        "filename": "style.css",
+        "updater": "helpers/theme-version-updater.js"
+      }
+    ]
+  },
+  "release": {
+    "branches": "master",
+    "repositoryUrl": "https://github.com/parrotpirate/palmettopointedance-theme",
+    "tagFormat": "${version}",
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      [
+        "@semantic-release/exec",
+        {
+          "prepareCmd": "yarn run release -- --release-as ${nextRelease.version} && yarn run buildcli"
+        }
+      ],
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json",
+            "CHANGELOG.md",
+            "style.css"
+          ]
+        }
+      ],
+      [
+        "@semantic-release/github",
+        {
+          "assets": [
+            {
+              "path": "palmettopointedance.zip",
+              "label": "Palmetto Pointe Dance Theme"
+            }
+          ]
+        }
+      ]
+    ]
   }
 }

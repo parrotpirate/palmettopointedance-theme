@@ -17,8 +17,5 @@ jobs:
         uses: borales/actions-yarn@v2.3.0
         with:
           cmd: build:production
-      - name: Zip Release
-        uses: TheDoctor0/zip-release@0.4.2
-        with:
-          filename: 'palmettopointedance.zip'
-          exclusions: '*.git* /*node_modules/* .editorconfig'
+      - name: release
+        run: semantic-release

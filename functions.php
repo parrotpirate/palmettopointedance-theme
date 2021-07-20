@@ -30,7 +30,7 @@ require $composer;
 
 require_once __DIR__ . '/bootstrap/app.php';
 
-require 'plugin-update-checker/plugin-update-checker.php';
+require 'helpers/plugin-update-checker/plugin-update-checker.php';
 $ppdaUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 	'https://github.com/parrotpirate/palmettopointedance-theme',
 	__FILE__,
