@@ -8,8 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.SEMANTIC_RELEASE_GITHUB_TOKEN }}
       
       - name: yarn install
         uses: borales/actions-yarn@v2.3.0
