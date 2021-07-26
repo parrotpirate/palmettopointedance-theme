@@ -14,7 +14,10 @@ require('@tinypixelco/laravel-mix-wp-blocks');
 
 mix
   .setPublicPath('./public')
-  .browserSync('localhost');
+  .browserSync({
+    proxy: 'http://localhost/',
+    open: false
+  });
 
 mix
   .sass('resources/styles/app.scss', 'styles')
